@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Windows}",
+            "name": "Debug windows",
+            "target": "windows",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug windows"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Windows}",
+            "name": "Release windows",
+            "target": "windows",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release windows"
+        }
+    ]
+}
