@@ -21,6 +21,12 @@ struct Windows: ParsableCommand {
     @Flag(name: .shortAndLong, help: "Output as JSON")
     var json: Bool = false
 
+    @Option(name: .shortAndLong, help: "Only list windows owned by this bundle identifier")
+    var bundleID: String?
+
+    @Option(name: .shortAndLong, help: "Only list windows owned by this app name (case-insensitive)")
+    var appName: String?
+
     mutating func run() throws {
         guard let raw = CGWindowListCopyWindowInfo([.optionOnScreenOnly], kCGNullWindowID)
                 as? [[String: Any]] else {
@@ -38,7 +44,13 @@ struct Windows: ParsableCommand {
 
             let app = NSRunningApplication(processIdentifier: pid)
             let bundleID = app?.bundleIdentifier ?? "<none>"
+            if let filter = self.bundleID, bundleID != filter {
+                continue
+            }
             let ownerName = (w[kCGWindowOwnerName as String] as? String) ?? "<unknown>"
+            if let filter = appName, ownerName.caseInsensitiveCompare(filter) != .orderedSame {
+                continue
+            }
             let title = (w[kCGWindowName as String] as? String) ?? ""
 
             let window = WindowInfo(
