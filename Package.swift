@@ -18,5 +18,11 @@ let package = Package(
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ]
         ),
+        // The screenshot agent. Same window-server APIs as `windows`, but it
+        // runs as a LaunchAgent inside the Aqua session so it can hold the
+        // Screen Recording grant that an SSH session can never have.
+        .executableTarget(
+            name: "shotd"
+        ),
     ]
 )
